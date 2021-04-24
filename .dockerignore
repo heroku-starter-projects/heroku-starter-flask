@@ -1,0 +1,17 @@
+# dependencies
+.venv
+
+# IDE
+.idea
+.awcache
+.vscode
+
+test
+coverage
+docs
+
+# misc
+.git*
+.env
+env_sample
+.DS_Store
