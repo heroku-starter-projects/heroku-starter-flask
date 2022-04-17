@@ -14,8 +14,8 @@ httpx = "*"
 
 [dev-packages]
 "flake8" = ">=3.7"
-yapf = ">=0.28"
 coverage = ">=4.5"
+autopep8 = "*"
 
 [requires]
 python_version = "3.6"

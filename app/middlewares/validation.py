@@ -2,6 +2,7 @@ from marshmallow import Schema, ValidationError
 from flask import request, g
 from werkzeug.exceptions import BadRequest
 from functools import wraps
+
 # from app import logger
 
 
@@ -27,10 +28,11 @@ def validate_json(schema):
     """
 
     def deco(f):
-
         @wraps(f)
         def wrapped(*args, **kwargs):
-            g.json = _validate_data(request.get_json(force=True, silent=True), schema, 'body')
+            g.json = _validate_data(
+                request.get_json(force=True, silent=True), schema, "body"
+            )
             return f(*args, **kwargs)
 
         return wrapped
@@ -44,10 +46,9 @@ def validate_query(schema):
     """
 
     def deco(f):
-
         @wraps(f)
         def wrapped(*args, **kwargs):
-            g.args = _validate_data(request.args, schema, 'query')
+            g.args = _validate_data(request.args, schema, "query")
             return f(*args, **kwargs)
 
         return wrapped
@@ -61,10 +62,9 @@ def validate_url(schema):
     """
 
     def deco(f):
-
         @wraps(f)
         def wrapped(*args, **kwargs):
-            g.vars = _validate_data(kwargs, schema, 'url')
+            g.vars = _validate_data(kwargs, schema, "url")
             return f(*args, **kwargs)
 
         return wrapped
@@ -80,6 +80,7 @@ def _validate_data(data, schema, input_type):
     try:
         result = schema.load(data)
     except ValidationError as err:
-        print(f'The {input_type} of the request is invalid', dict(errors=err.messages))
+        print(f"The {input_type} of the request is invalid",
+              dict(errors=err.messages))
         raise BadRequest()
     return result

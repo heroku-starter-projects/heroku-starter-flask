@@ -53,7 +53,7 @@ lint: install
 
 format: install
 	$(call log, "Running formatter ...")
-	$(pyrun) yapf $(main_package) $(test_package) -r -i
+	$(pyrun) autopep8 $(main_package) $(test_package) -r -i
 	$(call log, "Running formatter Done")
 
 clean:

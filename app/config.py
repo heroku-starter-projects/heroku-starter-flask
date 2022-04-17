@@ -6,7 +6,8 @@ class Config:
     # Server config
     HOST = environ.get('SERVER_HOST', '0.0.0.0')
     PORT = int(environ.get('SERVER_PORT', 5000))
-    CONCURRENCY = int(environ.get('CONCURRENCY')) if environ.get('CONCURRENCY') else None
+    CONCURRENCY = int(environ.get('CONCURRENCY')) if environ.get(
+        'CONCURRENCY') else None
     ENV = environ.get('ENV', 'production')
 
     # Logging
