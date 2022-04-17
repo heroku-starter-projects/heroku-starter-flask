@@ -45,6 +45,9 @@ $(venv)/bin/activate: Pipfile.lock
 db-upgrade: install
 	$(pyrun) alembic upgrade head
 
+db-downgrade: install
+	$(pyrun) alembic downgrade base
+
 lint: install
 	$(call log, "Running linter ...")
 	find $(main_package) -iname "*.py" | xargs $(pyrun) flake8

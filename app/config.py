@@ -23,5 +23,6 @@ class Config:
     DB_PORT = environ.get("DB_PORT", 5432)
     DB_SSL_MODE = environ.get("DB_SSL_MODE")
 
+    # JWT secrets
     JWT_SECRET = environ.get("JWT_SECRET")
     JWT_ALGORITHM = 'HS256'

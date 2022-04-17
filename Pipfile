@@ -12,6 +12,7 @@ alembic = ">=1.2"
 psycopg2-binary = ">=2.8"
 httpx = "*"
 pyjwt = "*"
+flask-bcrypt = "*"
 
 [dev-packages]
 "flake8" = ">=3.7"
