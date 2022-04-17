@@ -6,6 +6,6 @@ from app.routes.signup import Signup
 
 def register_routes(api):
     api.add_resource(Health, '/health')
-    api.add_resource(User, '/user/<int:user_id>')
+    api.add_resource(User, '/user/<int:user_id>', '/user')
     api.add_resource(Signup, '/signup')
     api.add_resource(Login, '/login')

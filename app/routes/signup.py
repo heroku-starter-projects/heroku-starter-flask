@@ -19,7 +19,6 @@ class Signup(Resource):
         user = UserModel(g.json['email'], g.json['name'], g.json['password'])
         g.session.add(user)
         g.session.commit()
+        g.user = user
 
-        token = user.generate_token()
-
-        return {'token': token}, 201
+        return {'message': 'Sign up successful', 'code': 'SIGNUP_SUCCESS'}, 201

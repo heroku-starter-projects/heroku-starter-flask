@@ -33,6 +33,23 @@
 					"response": []
 				},
 				{
+					"name": "user_self",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{flask-host}}/user",
+							"host": [
+								"{{flask-host}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "signup",
 					"request": {
 						"method": "POST",
