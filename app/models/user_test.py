@@ -14,6 +14,7 @@ class UserTestCase(unittest.TestCase):
         user.id = 1
 
         token = user.generate_token()
-        user_obj = jwt.decode(token, key=Config.JWT_SECRET, algorithms=Config.JWT_ALGORITHM)
+        user_obj = jwt.decode(token, key=Config.JWT_SECRET,
+                              algorithms=Config.JWT_ALGORITHM)
 
         assert user.id == user_obj['sub']
