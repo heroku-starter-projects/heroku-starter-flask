@@ -1,6 +1,10 @@
+import datetime
+import jwt
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Text
 from marshmallow import Schema, fields
+
+from app.config import Config
 
 Base = declarative_base()
 
@@ -13,12 +17,12 @@ class UserSchema(Schema):
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = "user"
 
-    id = Column(Integer, primary_key=True)
-    email = Column(Text)
-    name = Column(Text)
-    password = Column(Text)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(Text, unique=True)
+    name = Column(Text, nullable=False)
+    password = Column(Text, nullable=False)
 
     def __init__(self, email, name, password):
         self.email = email
@@ -27,3 +31,16 @@ class User(Base):
 
     def dump(self):
         return UserSchema().dump(self)
+
+    def generate_token(self):
+        payload = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=15),
+            'iat': datetime.datetime.utcnow(),
+            'sub': self.id
+        }
+
+        return jwt.encode(
+            payload,
+            Config.JWT_SECRET,
+            algorithm=Config.JWT_ALGORITHM,
+        )

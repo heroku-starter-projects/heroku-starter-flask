@@ -26,3 +26,12 @@ pipenv run alembic revision --autogenerate -m "Add users table"
 
 1. For debug mode run `make watch`. For non-debug run `make run`
 2. Import `./postman/*` into postman to get the API docs.
+
+## Troubleshooting
+
+```sh
+make fclean
+make install
+export PYTHONPATH=.
+make run
+```
