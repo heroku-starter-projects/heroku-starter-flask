@@ -1,5 +1,16 @@
 version: "3.9"
 services:
+#   heroku-starter-flask:
+#     build: .
+#     environment:
+#       - ENV=production
+#       - DB_USERNAME=root
+#       - DB_PASSWORD=password
+#       - DB_NAME=postgres
+#       - DB_HOST=postgres
+#       - SSL_MODE=disable
+#     ports:
+#       - 5002:5002
   postgres:
     image: postgres
     healthcheck:
