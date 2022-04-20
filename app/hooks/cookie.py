@@ -13,6 +13,7 @@ def register_cookies_hook(app):
             token = g.user.generate_token()
             response.set_cookie('token', token, httponly=True)
         else:
-            response.delete_cookie('token')
+            # response.delete_cookie('token')
+            pass
 
         return response
