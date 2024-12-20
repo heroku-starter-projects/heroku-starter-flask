@@ -68,24 +68,39 @@ class FoodTruck(Base):
 
     @staticmethod
     def find_closest(
-        session: Session, latitude: float, longitude: float, limit: int = 5
+        session: Session,
+        latitude: float,
+        longitude: float,
+        limit: int = 5,
+        radius: float = 5,
     ):
         """
-        Finds the closest food trucks to a given latitude and longitude.
+        Finds the closest food trucks to a given latitude and longitude within a specified radius.
 
         :param session: SQLAlchemy Session object.
         :param latitude: Latitude of the point.
         :param longitude: Longitude of the point.
         :param limit: Number of closest food trucks to return.
-        :return: List of closest FoodTruck objects.
+        :param radius: Maximum distance in kilometers for food trucks to be included (default: 5 km).
+        :return: List of tuples (FoodTruck, distance), where distance is in kilometers.
         """
+        # Create a geographic point with the given latitude and longitude
         point = func.ST_SetSRID(func.ST_Point(longitude, latitude), 4326)
-        return (
-            session.query(FoodTruck)
-            .order_by(func.ST_Distance(FoodTruck.coordinates, point))
-            .limit(limit)
-            .all()
+
+        # Calculate the distance between the food truck coordinates and the given point
+        distance_column = (
+            func.ST_DistanceSphere(FoodTruck.coordinates, point) / 1000.0
+        )  # Convert meters to kilometers
+
+        # Query the database
+        query = (
+            session.query(FoodTruck, distance_column.label("distance"))
+            .filter(distance_column <= radius)  # Filter by radius
+            .order_by(distance_column)  # Order by distance
+            .limit(limit)  # Limit the number of results
         )
+
+        return query.all()
 
     @staticmethod
     def calculate_distance(lat1, lon1, lat2, lon2):
@@ -119,7 +134,12 @@ class FoodTruck(Base):
 
     @classmethod
     def find_closest_in_memory(
-        cls, session: Session, latitude: float, longitude: float, limit: int = 5
+        cls,
+        session: Session,
+        latitude: float,
+        longitude: float,
+        limit: int = 5,
+        radius: float = 5,
     ):
         """
         Finds the closest food trucks to a given latitude and longitude by loading all data into memory.
@@ -128,13 +148,14 @@ class FoodTruck(Base):
         :param latitude: Latitude of the point.
         :param longitude: Longitude of the point.
         :param limit: Number of closest food trucks to return.
-        :return: List of closest FoodTruck objects.
+        :param radius: Maximum distance in kilometers for food trucks to be included (default: 5 km).
+        :return: List of tuples (FoodTruck, distance), where distance is in kilometers.
         """
         # Load all food trucks into memory
         food_trucks = session.query(cls).all()
 
         # Calculate distances and store results
-        distances = []
+        truck_distances = []
         for truck in food_trucks:
             # Extract latitude and longitude from the coordinates column
             truck_lat = float(session.query(func.ST_Y(truck.coordinates)).scalar())
@@ -142,8 +163,9 @@ class FoodTruck(Base):
 
             # Calculate distance
             distance = cls.calculate_distance(latitude, longitude, truck_lat, truck_lon)
-            distances.append((distance, truck))
+            if distance <= radius:
+                truck_distances.append((truck, distance))
 
         # Sort by distance and return the closest trucks
-        distances.sort(key=lambda x: x[0])
-        return [truck for _, truck in distances[:limit]]
+        truck_distances.sort(key=lambda x: x[1])
+        return truck_distances[:limit]
