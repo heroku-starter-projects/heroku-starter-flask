@@ -1,108 +1,11 @@
 {
 	"info": {
-		"_postman_id": "b541c0f8-c61b-46a3-97d1-f821d5b91680",
-		"name": "heroku-starter-flask",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "081dd06e-7e51-425e-ac73-fbc97145dab4",
+		"name": "food-truck",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3655822"
 	},
 	"item": [
-		{
-			"name": "user",
-			"item": [
-				{
-					"name": "user",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{flask-host}}/user/:id",
-							"host": [
-								"{{flask-host}}"
-							],
-							"path": [
-								"user",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "user_self",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{flask-host}}/user",
-							"host": [
-								"{{flask-host}}"
-							],
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "signup",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"a@b.com\",\r\n    \"name\": \"foo\",\r\n    \"password\": \"password\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{flask-host}}/signup",
-							"host": [
-								"{{flask-host}}"
-							],
-							"path": [
-								"signup"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"a@b.com\",\r\n    \"password\": \"password\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{flask-host}}/login",
-							"host": [
-								"{{flask-host}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
 		{
 			"name": "health",
 			"request": {
@@ -115,6 +18,76 @@
 					],
 					"path": [
 						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "food-trucks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{flask-host}}/food-trucks?latitude=35.17370598710992&longitude=-114.00505988023178&radius=8000&limit=5",
+					"host": [
+						"{{flask-host}}"
+					],
+					"path": [
+						"food-trucks"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "35.17370598710992"
+						},
+						{
+							"key": "longitude",
+							"value": "-114.00505988023178"
+						},
+						{
+							"key": "radius",
+							"value": "8000"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "food-trucks-postgis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{flask-host}}/food-trucks-postgis?latitude=35.17370598710992&longitude=-114.00505988023178&radius=8000&limit=5",
+					"host": [
+						"{{flask-host}}"
+					],
+					"path": [
+						"food-trucks-postgis"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "35.17370598710992"
+						},
+						{
+							"key": "longitude",
+							"value": "-114.00505988023178"
+						},
+						{
+							"key": "radius",
+							"value": "8000"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
 					]
 				}
 			},
