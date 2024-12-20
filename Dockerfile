@@ -1,22 +1,30 @@
-FROM python:3.6-alpine
+# Start from the official Python 3.10 image
+FROM python:3.10
 
-# install dependencies
-RUN apk --update add gcc python-dev linux-headers musl-dev postgresql-dev build-base
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    python3-dev \
+    libpq-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install pipenv and gunicorn
 RUN pip install pipenv gunicorn
 
-# prepare app directory
+# Prepare app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# install project dependencies
+# Install project dependencies
 COPY Pipfile* ./
 RUN set -ex && pipenv install --deploy --system
 
-# copy sources
+# Copy the rest of your application code
 COPY . .
 
-# tells Makefile to use system python instead of pipenv
+# Environment variable to indicate that we are running inside Docker
 ENV PIPENV_IN_DOCKER=1
 
-# starting service
-CMD [ "gunicorn", "-c", "wsgi.conf.py", "server:app" ]
+# Command to start your application
+CMD ["sh", "start.sh"]
