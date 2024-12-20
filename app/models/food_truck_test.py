@@ -11,27 +11,10 @@ class FoodTruckTestCase(unittest.TestCase):
         # Set up database connection
         cls.session = sqlalchemy_session(generate_connection_string())
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.session.close()
-
-    # python -m unittest app.models.food_truck_test.FoodTruckTestCase.test_100_find_closest -v
-    def test_100_find_closest(self):
         # Coordinates for the test
-        test_lat = 35.17370598710992
-        test_long = -114.00505988023178
-
-        # Call the find_closest method
-        closest_trucks = FoodTruck.find_closest(
-            self.session,
-            test_lat,
-            test_long,
-            limit=5,
-        )
-
-        # Validate the results
-        assert len(closest_trucks) <= 5, "Should return at most 5 results"
-        expected_results = [
+        cls.test_lat = 35.17370598710992
+        cls.test_long = -114.00505988023178
+        cls.expected_results = [
             {
                 "applicant": "Park's Catering",
                 "coordinates": {
@@ -68,6 +51,25 @@ class FoodTruckTestCase(unittest.TestCase):
                 },
             },
         ]
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.session.close()
+
+    # python -m unittest app.models.food_truck_test.FoodTruckTestCase.test_100_find_closest -v
+    def test_100_find_closest(self):
+
+        # Call the find_closest method
+        closest_trucks = FoodTruck.find_closest(
+            self.session,
+            self.test_lat,
+            self.test_long,
+            limit=5,
+        )
+
+        # Validate the results
+        assert len(closest_trucks) <= 5, "Should return at most 5 results"
+
         actual_results = []
         for truck in closest_trucks:
             assert isinstance(
@@ -76,4 +78,27 @@ class FoodTruckTestCase(unittest.TestCase):
             truck_dict = truck.dump()
             actual_results.append(_.pick(truck_dict, ["applicant", "coordinates"]))
 
-        assert actual_results == expected_results, actual_results
+        assert actual_results == self.expected_results, actual_results
+
+    # python -m unittest app.models.food_truck_test.FoodTruckTestCase.test_200_find_closest_in_memory -v
+    def test_200_find_closest_in_memory(self):
+        # Call the find_closest method
+        closest_trucks = FoodTruck.find_closest_in_memory(
+            self.session,
+            self.test_lat,
+            self.test_long,
+            limit=5,
+        )
+
+        # Validate the results
+        assert len(closest_trucks) <= 5, "Should return at most 5 results"
+
+        actual_results = []
+        for truck in closest_trucks:
+            assert isinstance(
+                truck, FoodTruck
+            ), "Result should be an instance of FoodTruck"
+            truck_dict = truck.dump()
+            actual_results.append(_.pick(truck_dict, ["applicant", "coordinates"]))
+
+        assert actual_results == self.expected_results, actual_results
