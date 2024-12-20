@@ -25,4 +25,4 @@ class Config:
 
     # JWT secrets
     JWT_SECRET = environ.get("JWT_SECRET")
-    JWT_ALGORITHM = 'HS256'
+    JWT_ALGORITHM = "HS256"

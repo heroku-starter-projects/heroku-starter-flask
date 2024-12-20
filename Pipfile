@@ -13,6 +13,8 @@ psycopg2-binary = ">=2.8"
 httpx = "*"
 pyjwt = "*"
 flask-bcrypt = "*"
+geoalchemy2 = "*"
+pydash = "*"
 
 [dev-packages]
 "flake8" = ">=3.7"
@@ -20,4 +22,4 @@ coverage = ">=4.5"
 autopep8 = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.10"

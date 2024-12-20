@@ -12,7 +12,8 @@ services:
 #     ports:
 #       - 5002:5002
   postgres:
-    image: postgres
+    # image: postgres
+    image: postgis/postgis:14-3.3
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
       timeout: 45s

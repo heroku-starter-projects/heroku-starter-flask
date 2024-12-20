@@ -1,12 +1,11 @@
 import datetime
 import jwt
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Text
 from marshmallow import Schema, fields
 
 from app.config import Config
 
-Base = declarative_base()
+from app.models.base import Base
 
 
 class UserSchema(Schema):
@@ -34,9 +33,9 @@ class User(Base):
 
     def generate_token(self):
         payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=15),
-            'iat': datetime.datetime.utcnow(),
-            'sub': self.id
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=15),
+            "iat": datetime.datetime.utcnow(),
+            "sub": self.id,
         }
 
         return jwt.encode(
