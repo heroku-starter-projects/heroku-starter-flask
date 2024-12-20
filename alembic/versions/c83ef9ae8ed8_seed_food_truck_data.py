@@ -48,7 +48,7 @@ def upgrade():
                     VALUES (
                         :locationid, :applicant, :facility_type, :location_description,
                         :address, :blocklot, :block, :lot, :permit, :status, :food_items,
-                        ST_GeomFromText(:coordinates), :schedule, :dayshours, :noise_sent, :approved,
+                        ST_GeomFromEWKT(:coordinates), :schedule, :dayshours, :noise_sent, :approved,
                         :received, :prior_permit, :expiration_date, :fire_prevention_districts,
                         :police_districts, :supervisor_districts, :zip_codes, :neighborhoods_old
                     )
