@@ -5,6 +5,7 @@ from app.helpers.database import generate_connection_string, sqlalchemy_session
 import pydash as _
 
 
+# python -m unittest app.models.food_truck_test.FoodTruckTestCase -v
 class FoodTruckTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -16,6 +17,7 @@ class FoodTruckTestCase(unittest.TestCase):
         cls.test_long = -114.00505988023178
         cls.expected_results = [
             {
+                "locationid": 1575190,
                 "applicant": "Park's Catering",
                 "coordinates": {
                     "latitude": 37.730906150359694,
@@ -24,6 +26,7 @@ class FoodTruckTestCase(unittest.TestCase):
                 "distance": 800,
             },
             {
+                "locationid": 1575191,
                 "applicant": "Park's Catering",
                 "coordinates": {
                     "latitude": 37.73213495192223,
@@ -32,6 +35,7 @@ class FoodTruckTestCase(unittest.TestCase):
                 "distance": 800,
             },
             {
+                "locationid": 963995,
                 "applicant": "Singh Brothers Ice Cream",
                 "coordinates": {
                     "latitude": 37.72943828845401,
@@ -40,6 +44,7 @@ class FoodTruckTestCase(unittest.TestCase):
                 "distance": 800,
             },
             {
+                "locationid": 1575189,
                 "applicant": "Park's Catering",
                 "coordinates": {
                     "latitude": 37.726382932182176,
@@ -48,6 +53,7 @@ class FoodTruckTestCase(unittest.TestCase):
                 "distance": 800,
             },
             {
+                "locationid": 1337427,
                 "applicant": "Liang Bai Ping",
                 "coordinates": {
                     "latitude": 37.72578913981244,
@@ -84,7 +90,9 @@ class FoodTruckTestCase(unittest.TestCase):
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
             actual_results.append(
-                _.pick(truck_dict, ["applicant", "coordinates", "distance"])
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
             )
             actual_results[-1]["distance"] = int(actual_results[-1]["distance"])
 
@@ -113,7 +121,9 @@ class FoodTruckTestCase(unittest.TestCase):
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
             actual_results.append(
-                _.pick(truck_dict, ["applicant", "coordinates", "distance"])
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
             )
             actual_results[-1]["distance"] = int(actual_results[-1]["distance"])
 
@@ -141,7 +151,9 @@ class FoodTruckTestCase(unittest.TestCase):
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
             actual_results.append(
-                _.pick(truck_dict, ["applicant", "coordinates", "distance"])
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
             )
             actual_results[-1]["distance"] = int(actual_results[-1]["distance"])
 
@@ -169,7 +181,9 @@ class FoodTruckTestCase(unittest.TestCase):
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
             actual_results.append(
-                _.pick(truck_dict, ["applicant", "coordinates", "distance"])
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
             )
             actual_results[-1]["distance"] = int(actual_results[-1]["distance"])
 
@@ -197,7 +211,9 @@ class FoodTruckTestCase(unittest.TestCase):
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
             actual_results.append(
-                _.pick(truck_dict, ["applicant", "coordinates", "distance"])
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
             )
             actual_results[-1]["distance"] = int(actual_results[-1]["distance"])
 

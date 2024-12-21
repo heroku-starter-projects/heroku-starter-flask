@@ -40,7 +40,11 @@ class FoodTrucks(Resource):
         for truck, distance in closest_trucks:
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
-            result.append(_.pick(truck_dict, ["applicant", "coordinates", "distance"]))
+            result.append(
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
+            )
 
         return {"closest_food_trucks": result}, 200
 
@@ -79,6 +83,10 @@ class FoodTrucksPostgis(Resource):
         for truck, distance in closest_trucks:
             truck_dict = truck.dump()
             truck_dict["distance"] = distance
-            result.append(_.pick(truck_dict, ["applicant", "coordinates", "distance"]))
+            result.append(
+                _.pick(
+                    truck_dict, ["locationid", "applicant", "coordinates", "distance"]
+                )
+            )
 
         return {"closest_food_trucks": result}, 200
