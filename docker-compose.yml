@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  heroku-starter-flask:
+  food-truck-backend:
     build: .
     environment:
       - ENV=production
@@ -30,7 +30,7 @@ services:
   postgres:
     image: postgis/postgis:14-3.3
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -q -d postgres -U root" ]
+      test: [ "CMD-SHELL", "pg_isready -q -d postgres -U postgres" ]
       timeout: 45s
       interval: 10s
       retries: 10
@@ -38,9 +38,6 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-      - APP_DB_USER=docker
-      - APP_DB_PASS=docker
-      - APP_DB_NAME=docker
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
     ports:
