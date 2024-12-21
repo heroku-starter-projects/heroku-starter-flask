@@ -80,7 +80,5 @@ def _validate_data(data, schema, input_type):
     try:
         result = schema.load(data)
     except ValidationError as err:
-        print(f"The {input_type} of the request is invalid",
-              dict(errors=err.messages))
-        raise BadRequest()
+        raise BadRequest(description=f"Invalid {input_type} parameters: {err.messages}")
     return result
